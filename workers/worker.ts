@@ -1,4 +1,4 @@
-import { pipeline } from "@huggingface/transformers";
+import { pipeline, TextStreamer } from "@huggingface/transformers";
 
 class TranslationPipeline {
     static task = "translation";
@@ -23,4 +23,26 @@ self.addEventListener("message", async (event: MessageEvent) => {
             }
         );
 
-})
+        const streamer = new TextStreamer(translator.tokenizer,{
+            skip_prompt: true,
+            skip_special_tokens: true,
+
+            callback_function: (text:string) =>{
+                self.postMessage({
+                    status: "update",
+                    output: text,
+                });
+            },
+        });
+
+        const output = await translator(text,{
+            tgt_lang,
+            src_lang,
+            streamer,
+        });
+
+        self.postMessage({
+            status: "complete",
+            output,
+        });
+});
