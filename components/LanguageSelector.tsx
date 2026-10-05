@@ -16,17 +16,29 @@ const LANGUAGES = {
 }
 
 type Props = {
-  type: string;
-  defaultLanguage: string;
-  onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+    type: string;
+    defaultLanguage: string;
+    onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 };
 
-const LanguageSelector = () => {
-  return (
-    <div>
+const LanguageSelector = ({ type,
+    defaultLanguage,
+    onChange,
+}: Props) => {
+    return (
+        <div>
+            <label>{type}</label>
 
-    </div>
-  )
+            <select onChange={onChange}
+                defaultValue={defaultLanguage}>
+                {Object.entries(LANGUAGES).map(([name, index]) => (
+                    <option key={index} value={index}>
+                        {name}
+                    </option>
+                ))}
+            </select>
+        </div>
+    )
 }
 
 export default LanguageSelector
