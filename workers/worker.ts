@@ -2,7 +2,7 @@ import { pipeline, TextStreamer } from "@huggingface/transformers";
 
 class TranslationPipeline {
     static task = "translation" as const;
-    static model = "Xenova/nllb-200-distilled-600";
+    static model = "Xenova/nllb-200-distilled-600M  ";
     static instance: any = null;
 
     static getInstance = async (progress_callback: any = null) => {
