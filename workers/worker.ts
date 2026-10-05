@@ -15,34 +15,34 @@ class TranslationPipeline {
 }
 
 self.addEventListener("message", async (event: MessageEvent) => {
-        const {text, src_lang, tgt_lang} = event.data;
+    const { text, src_lang, tgt_lang } = event.data;
 
-        const translator = await TranslationPipeline.getInstance(
-            (progress: any) => {
-                self.postMessage(progress);
-            }
-        );
+    const translator = await TranslationPipeline.getInstance(
+        (progress: any) => {
+            self.postMessage(progress);
+        }
+    );
 
-        const streamer = new TextStreamer(translator.tokenizer,{
-            skip_prompt: true,
-            skip_special_tokens: true,
+    const streamer = new TextStreamer(translator.tokenizer, {
+        skip_prompt: true,
+        skip_special_tokens: true,
 
-            callback_function: (text:string) =>{
-                self.postMessage({
-                    status: "update",
-                    output: text,
-                });
-            },
-        });
+        callback_function: (text: string) => {
+            self.postMessage({
+                status: "update",
+                output: text,
+            });
+        },
+    });
 
-        const output = await translator(text,{
-            tgt_lang,
-            src_lang,
-            streamer,
-        });
+    const output = await translator(text, {
+        tgt_lang,
+        src_lang,
+        streamer,
+    });
 
-        self.postMessage({
-            status: "complete",
-            output,
-        });
+    self.postMessage({
+        status: "complete",
+        output,
+    });
 });
