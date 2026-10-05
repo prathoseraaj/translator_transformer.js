@@ -13,3 +13,14 @@ class TranslationPipeline {
         return this.instance;
     }
 }
+
+self.addEventListener("message", async (event: MessageEvent) => {
+        const {text, src_lang, tgt_lang} = event.data;
+
+        const translator = await TranslationPipeline.getInstance(
+            (progress: any) => {
+                self.postMessage(progress);
+            }
+        );
+
+})
