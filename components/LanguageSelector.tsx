@@ -15,6 +15,12 @@ const LANGUAGES = {
     Korean: "kor_Hang",
 }
 
+type Props = {
+  type: string;
+  defaultLanguage: string;
+  onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+};
+
 const LanguageSelector = () => {
   return (
     <div>
