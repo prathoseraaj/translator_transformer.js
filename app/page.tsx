@@ -14,7 +14,7 @@ export default function Home() {
 
   const [input, setInput] = useState(
     "I love walking my dog."
-  );
+  );   
 
   const [sourceLanguage, setSourceLanguage] =
     useState("eng_Latn");
